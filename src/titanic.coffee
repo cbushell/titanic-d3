@@ -37,7 +37,7 @@ class Titanic
       .attr("x", width)
       .attr("y", -6)
       .style("text-anchor", "end")
-      .text("Sepal Width (cm)")
+      .text("Age")
 
     svg.append("g")
       .attr("class", "y axis")
@@ -48,19 +48,19 @@ class Titanic
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Sepal Length (cm)")
+      .text("Class")
 
     d3.csv("data/train.csv", (d) ->
+      data = []
       for titanee in d
         do (titanee) ->
-          titanee.age = if titanee.age then +titanee.age else 0
-          titanee.pclass = if titanee.pclass then +titanee.pclass else 0
-
+          if titanee.age and titanee.pclass
+            data.push(titanee)
 
       color = d3.scale.category10();
 
       svg.selectAll(".dot")
-        .data(d)
+        .data(data)
         .enter().append("circle")
         .attr("class", "dot")
         .attr("r", 3.5)
