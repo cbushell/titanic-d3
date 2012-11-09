@@ -1,0 +1,24 @@
+.ring {
+    fill: none;
+    stroke: black;
+    stroke-width: 1px;
+}
+
+.axis {
+    stroke: black;
+    stroke-width: 1px
+}
+
+.c {
+    fill: rgb(55, 153, 221);
+    stroke: white;
+}
+
+.t {
+    fill: rgb(55, 153, 221);
+    stroke: white;
+}
+
+.description {
+    position: absolute;
+}

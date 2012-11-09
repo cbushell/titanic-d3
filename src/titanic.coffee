@@ -1,0 +1,6 @@
+class Titanic
+  constructor: () ->
+
+
+
+
