@@ -7,11 +7,11 @@ class Titanic
 
     x = d3.scale.linear()
       .range([0, width])
-      .domain([0,100])
+      .domain([0, 100])
 
     y = d3.scale.linear()
       .range([height, 0])
-      .domain([0,3])
+      .domain([0, 3])
 
     xAxis = d3.svg.axis()
       .scale(x)
@@ -50,24 +50,45 @@ class Titanic
       .style("text-anchor", "end")
       .text("Class")
 
-    d3.csv("data/train.csv", (d) ->
-      data = []
+    d3.csv("data/train.csv", (d) =>
+      males = []
+      females = []
       for titanee in d
         do (titanee) ->
           if titanee.age and titanee.pclass
-            data.push(titanee)
+            list = if titanee.sex == "male" then males else females
+            list.push(titanee)
 
-      color = d3.scale.category10();
 
-      svg.selectAll(".dot")
-        .data(data)
-        .enter().append("circle")
-        .attr("class", "dot")
-        .attr("r", 3.5)
-        .attr("cx", (d) -> return x(d.age))
-        .attr("cy", (d) -> return y(d.pclass))
-        .style("fill", (d) -> return color(d.sex))
+      context = svg.selectAll(".dot")
+        .data(males)
+        .enter()
+      this.square(context, x, y)
+
+      context = svg.selectAll(".dot")
+        .data(females)
+        .enter()
+      this.circle(context, x, y)
     )
+
+  color = d3.scale.category10()
+
+  circle: (c, x, y) ->
+    c.append("circle")
+      .attr("class", "dot")
+      .attr("r", 3.5)
+      .attr("cx", (d) -> return x(d.age))
+      .attr("cy", (d) -> return y(d.pclass))
+      .style("fill", (d) -> return color(d.survived))
+
+  square: (c, x, y) ->
+    c.append("rect")
+      .attr("width", 7)
+      .attr("height", 7)
+      .attr("x", (d) -> return x(d.age))
+      .attr("y", (d) -> return y(d.pclass))
+      .style("fill", (d) -> return color(d.survived))
+
 
 window.onload = ->
   radar = new Titanic()
