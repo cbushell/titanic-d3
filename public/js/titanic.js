@@ -72,8 +72,7 @@
   })();
 
   window.onload = function() {
-    var radar;
-    return radar = new Titanic();
+    return new Titanic();
   };
 
 }).call(this);

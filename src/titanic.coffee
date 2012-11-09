@@ -91,5 +91,5 @@ class Titanic
 
 
 window.onload = ->
-  radar = new Titanic()
+  new Titanic()
 
