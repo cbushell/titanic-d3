@@ -7,9 +7,11 @@ class Titanic
 
     x = d3.scale.linear()
       .range([0, width])
+      .domain([0,100])
 
     y = d3.scale.linear()
       .range([height, 0])
+      .domain([0,3])
 
     xAxis = d3.svg.axis()
       .scale(x)
@@ -48,8 +50,25 @@ class Titanic
       .style("text-anchor", "end")
       .text("Sepal Length (cm)")
 
+    d3.csv("data/train.csv", (d) ->
+      for titanee in d
+        do (titanee) ->
+          titanee.age = if titanee.age then +titanee.age else 0
+          titanee.pclass = if titanee.pclass then +titanee.pclass else 0
+
+
+      color = d3.scale.category10();
+
+      svg.selectAll(".dot")
+        .data(d)
+        .enter().append("circle")
+        .attr("class", "dot")
+        .attr("r", 3.5)
+        .attr("cx", (d) -> return x(d.age))
+        .attr("cy", (d) -> return y(d.pclass))
+        .style("fill", (d) -> return color(d.sex))
+    )
 
 window.onload = ->
-  canvasSize = 820
   radar = new Titanic()
 
